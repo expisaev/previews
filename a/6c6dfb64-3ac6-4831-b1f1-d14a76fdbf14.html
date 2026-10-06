@@ -74,31 +74,66 @@
     text-underline-offset: 2px;
   }
 
-  a:hover { text-decoration-thickness: 2px; }
-
-  /* Пустые ссылки — пунктирное подчёркивание, чтобы визуально отличать от обычных */
   a[href="#"] {
     text-decoration: none;
     border-bottom: 1px dashed currentColor;
   }
 
-  /* Карта процесса */
-  .scheme {
-    font-family: "SF Mono", Monaco, Consolas, "Liberation Mono",
-                 "Courier New", monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    background: var(--soft);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 14px 16px;
-    overflow-x: auto;
-    white-space: pre;
-    -webkit-overflow-scrolling: touch;
-    margin: 8px 0 16px;
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px 0;
+    margin: 24px 0 26px;
+    padding: 0;
+    list-style: none;
   }
 
-  /* Таблица */
+  .flow-step {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .flow-circle {
+    width: clamp(84px, 20vw, 108px);
+    height: clamp(84px, 20vw, 108px);
+    flex: none;
+    border: 2px solid var(--text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    font-size: clamp(12px, 2.6vw, 13.5px);
+    line-height: 1.25;
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .flow-arrow {
+    width: clamp(16px, 4vw, 24px);
+    height: 1.5px;
+    flex: none;
+    position: relative;
+    margin: 0 clamp(4px, 1.5vw, 8px);
+    background: var(--text);
+  }
+
+  .flow-arrow::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-top: 1.5px solid var(--text);
+    border-right: 1.5px solid var(--text);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
   .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -126,7 +161,6 @@
 
   td:last-child { white-space: nowrap; }
 
-  /* Чек-лист */
   .checklist {
     list-style: none;
     padding: 0;
@@ -148,16 +182,6 @@
     height: 16px;
     border: 1.5px solid var(--text);
     border-radius: 3px;
-  }
-
-  /* Словарь */
-  .glossary dt {
-    font-weight: 600;
-    margin-top: 16px;
-  }
-
-  .glossary dd {
-    margin: 4px 0 0;
   }
 
   .note {
@@ -198,6 +222,7 @@
     .container { max-width: none; padding: 0; }
     a { color: #000; text-decoration: none; border-bottom: none; }
     h2 { page-break-after: avoid; }
+    .flow { gap: 10px 0; }
   }
 </style>
 </head>
@@ -220,7 +245,47 @@
   <h2>3. Карта процесса ВЭД</h2>
   <p>Ниже — упрощённая схема, которая помогает увидеть, где в аналитике ВЭД появляется тот или иной термин.</p>
 
-  <div class="scheme">Участники ВЭД → Товар → Контракт → Условия поставки (Инкотермс) → Документы → Таможня → Платежи → Логистика → Данные → Аналитика</div>
+  <ol class="flow">
+    <li class="flow-step">
+      <span class="flow-circle">Участники ВЭД</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Товар</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Контракт</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Условия поставки (Инкотермс)</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Документы</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Таможня</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Платежи</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Логистика</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Данные</span>
+      <span class="flow-arrow" aria-hidden="true"></span>
+    </li>
+    <li class="flow-step">
+      <span class="flow-circle">Аналитика</span>
+    </li>
+  </ol>
 
   <p>На каждом этапе возникают свои понятия: контракт и <a href="#">Инкотермс</a> определяют распределение расходов и рисков; документы и <a href="#">декларация</a> — формализуют сделку; таможня и платежи — связаны с пошлинами и контролем; данные — превращаются в статистику и аналитику.</p>
 
@@ -249,22 +314,22 @@
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Декларация на товары (ДТ)</a></td>
+          <td>Декларация на товары (ДТ)</td>
           <td>Документ, подаваемый в таможенный орган при перемещении товаров.</td>
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">ТН ВЭД</a></td>
+          <td>ТН ВЭД</td>
           <td>Классификатор товаров для таможенных целей; от кода зависят пошлины и статистика.</td>
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Таможенные платежи</a></td>
+          <td>Таможенные платежи</td>
           <td>Пошлины, НДС, акцизы и сборы, взимаемые таможней.</td>
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Валютный контроль</a></td>
+          <td>Валютный контроль</td>
           <td>Проверка законности валютных операций и репатриации выручки.</td>
           <td><a href="#">словарь</a></td>
         </tr>
@@ -274,12 +339,12 @@
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Таможенная стоимость</a></td>
+          <td>Таможенная стоимость</td>
           <td>Стоимость товара, определяемая для расчёта таможенных платежей.</td>
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Статистическая стоимость</a></td>
+          <td>Статистическая стоимость</td>
           <td>Стоимость товара, приведённая к единому базису для статистики.</td>
           <td><a href="#">словарь</a></td>
         </tr>
@@ -294,7 +359,7 @@
           <td><a href="#">словарь</a></td>
         </tr>
         <tr>
-          <td><a href="#">Вес нетто / брутто</a></td>
+          <td>Вес нетто / брутто</td>
           <td>Вес товара без упаковки / с упаковкой; используется в аналитике.</td>
           <td><a href="#">словарь</a></td>
         </tr>
